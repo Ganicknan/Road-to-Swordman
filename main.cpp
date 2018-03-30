@@ -1,5 +1,5 @@
 #include "Unit.cpp"
-#include "Map.cpp"
+//#include "Map.cpp" (uncomplete)
 using namespace std;
 
 int main(){
