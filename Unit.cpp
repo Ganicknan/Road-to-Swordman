@@ -6,9 +6,9 @@ class Unit{
 	string name;
 	int hp,Maxhp;
 	int mp,Maxmp;
-	double atk,matk;
-	double def,mdef;
-	int Str,Agi,Dex,Int,Lux,Vit; //main stats.
+	int atk,matk;
+	int def,mdef;
+	int Str,Agi,Dex,Int,Luk,Vit; //main stats.
 	double Cri,Eva,Acc; //sub stats.
 	int money;
 	int lvl; // level.
@@ -16,5 +16,5 @@ class Unit{
 	int Mexp; //max exp.
 	Equipment* weapon,offhand,armor,accessory;
 	public:
-		Unit(string,int,int,int,int,int,int);
+		Unit(string,int,int,int,int,int,int,int,int); // name,str,agi,dex,int,luk,vit,exp,money
 };
