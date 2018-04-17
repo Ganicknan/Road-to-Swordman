@@ -111,6 +111,7 @@ void changeMap(int stage, int x, int y) {
 }
 
 int main() {
+	//test git hub
 	setup();
 	changeMap(stage,x,y);
 	draw();
