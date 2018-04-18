@@ -13,6 +13,7 @@ char map[32][102];
 enum eInput { STOP = 0, LEFF, RIGHT, UP, DOWN };
 eInput inp;
 bool keyDown = false;
+Unit hero("Hero", 4, 4, 4, 4, 4, 4, 0, 0);
 
 void setup() {
 	closeGame = false;
@@ -45,7 +46,7 @@ void draw() {
 	}
 }
 
-	void input() {
+void input() {
 	if (_kbhit()) {
 		switch (_getch()) {
 		case 'w':
@@ -95,7 +96,6 @@ void Logic() {
 	}
 }
 
-
 void changeMap(int stage, int x, int y) {
 	if (stage == 1) {
 		ifstream readmap("map1.txt");
@@ -119,7 +119,7 @@ int main() {
 		input();
 		Logic();
 		if (keyDown) {
-			changeMap(stage,x,y);
+			draw();
 			if (closeGame) {
 				break;
 			}
