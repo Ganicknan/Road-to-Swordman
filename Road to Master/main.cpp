@@ -3,11 +3,6 @@
 #include<string>
 #include"Map.h"
 #include"Unit.h"
-#include<random>
-#include<ctime>
-#include"Battle.h"
-#include<vector>
-#include<cstdlib>
 using namespace std;
 
 bool closeGame;
@@ -18,18 +13,18 @@ char map[32][102];
 enum eInput { STOP = 0, LEFF, RIGHT, UP, DOWN };
 eInput inp;
 bool keyDown = false;
+Unit hero("Hero", 4, 4, 4, 4, 4, 4, 0, 0);
 
 void setup() {
-	monstersetup();
 	closeGame = false;
 	x = width / 2;
 	y = height / 2;
-	stage = 2;
+	stage = 1;
+
 }
 
 void draw() {
 	system("cls");
-	cout << monster[0].name;
 	for (int i = 0; i < 32; i++) {
 		for (int j = 0; j < 102; j++) {
 			if (x == j && y == i) {
@@ -45,24 +40,6 @@ void draw() {
 				if (map[i][j] == '2') {
 					cout << ">";
 				}
-				if (map[i][j] == '3') {
-					cout << "<";
-				}
-				if (map[i][j] == '4') {
-					cout << "*";
-				}
-				if (map[i][j] == 'a') {
-					cout << "B";
-				}
-				if (map[i][j] == 'b') {
-					cout << "B";
-				}
-				if (map[i][j] == 'c') {
-					cout << "B";
-				}
-				if (map[i][j] == 'T') {
-					cout << "T";
-				}
 			}
 		}
 		cout << "\n";
@@ -73,28 +50,20 @@ void input() {
 	if (_kbhit()) {
 		switch (_getch()) {
 		case 'w':
-			if (map[y - 1][x] != '1') {
-				inp = UP;
-				keyDown = true;
-			}
+			inp = UP;
+			keyDown = true;
 			break;
 		case 'a':
-			if (map[y][x - 1] != '1') {
-				inp = LEFF;
-				keyDown = true;
-			}
+			inp = LEFF;
+			keyDown = true;
 			break;
 		case 's':
-			if (map[y + 1][x] != '1') {
-				inp = DOWN;
-				keyDown = true;
-			}
+			inp = DOWN;
+			keyDown = true;
 			break;
 		case 'd':
-			if (map[y][x + 1] != '1') {
-				inp = RIGHT;
-				keyDown = true;
-			}
+			inp = RIGHT;
+			keyDown = true;
 			break;
 		case 'x':
 			closeGame = true;
@@ -127,55 +96,29 @@ void Logic() {
 	}
 }
 
-
-void createMap() {
-	ifstream readmap;
+void changeMap(int stage, int x, int y) {
 	if (stage == 1) {
-		readmap.open("map1.txt");
-	}
-	if (stage == 2) {
-		readmap.open("map2.txt");
-	}
-	string textline;
-	int i = 0;
-	while (getline(readmap, textline)) {
-		for (int j = 0; j < 102; j++) {
-			map[i][j] = textline[j];
-		}
-		i++;
-	}
-	readmap.close();
-}
-
-void changeMap() {
-	if (stage == 1) {
-		if (map[y][x] == '2') {
-			stage = 2;
-			x = 2;
+		ifstream readmap("map1.txt");
+		string textline;
+		int i = 0;
+		while (getline(readmap, textline)) {
+			for (int j = 0; j < 102; j++) {
+				map[i][j] = textline[j];
+			}
+			i++;
 		}
 	}
-	if (stage == 2) {
-		if (map[y][x] == '3') {
-			stage = 1;
-			x = 99;
-		}
-	}
-	createMap();
 }
 
 int main() {
-	srand(time(0));
+	//test git hub
 	setup();
-	createMap();
+	changeMap(stage,x,y);
 	draw();
 	while (1) {
 		input();
 		Logic();
 		if (keyDown) {
-			changeMap();
-			if (map[y][x] == '4' && rand()%5 == 0) {
-				battleUI();
-			}
 			draw();
 			if (closeGame) {
 				break;
