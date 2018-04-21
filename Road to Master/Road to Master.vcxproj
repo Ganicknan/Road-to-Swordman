@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Equipment.h" />
+    <ClInclude Include="Battle.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>
