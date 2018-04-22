@@ -3,6 +3,12 @@
 #include<string>
 #include"Map.h"
 #include"Unit.h"
+#include<random>
+#include<ctime>
+#include"Battle.h"
+#include<vector>
+#include<cstdlib>
+#include"Inventory.h"
 using namespace std;
 
 bool closeGame;
@@ -10,21 +16,22 @@ int x, y, stage;
 int width = 102;
 int height = 32;
 char map[32][102];
-enum eInput { STOP = 0, LEFF, RIGHT, UP, DOWN };
+enum eInput { STOP = 0, LEFF, RIGHT, UP, DOWN, INVENTORY };
 eInput inp;
 bool keyDown = false;
-Unit hero("Hero", 4, 4, 4, 4, 4, 4, 0, 0);
+bool inventory_on = false;
 
 void setup() {
+	monstersetup();
 	closeGame = false;
 	x = width / 2;
 	y = height / 2;
-	stage = 1;
-
+	stage = 2;
 }
 
 void draw() {
 	system("cls");
+	cout << monster[0].name;
 	for (int i = 0; i < 32; i++) {
 		for (int j = 0; j < 102; j++) {
 			if (x == j && y == i) {
@@ -40,6 +47,24 @@ void draw() {
 				if (map[i][j] == '2') {
 					cout << ">";
 				}
+				if (map[i][j] == '3') {
+					cout << "<";
+				}
+				if (map[i][j] == '4') {
+					cout << "*";
+				}
+				if (map[i][j] == 'a') {
+					cout << "B";
+				}
+				if (map[i][j] == 'b') {
+					cout << "B";
+				}
+				if (map[i][j] == 'c') {
+					cout << "B";
+				}
+				if (map[i][j] == 'T') {
+					cout << "T";
+				}
 			}
 		}
 		cout << "\n";
@@ -50,19 +75,31 @@ void input() {
 	if (_kbhit()) {
 		switch (_getch()) {
 		case 'w':
-			inp = UP;
-			keyDown = true;
+			if (map[y - 1][x] != '1') {
+				inp = UP;
+				keyDown = true;
+			}
 			break;
 		case 'a':
-			inp = LEFF;
-			keyDown = true;
+			if (map[y][x - 1] != '1') {
+				inp = LEFF;
+				keyDown = true;
+			}
 			break;
 		case 's':
-			inp = DOWN;
-			keyDown = true;
+			if (map[y + 1][x] != '1') {
+				inp = DOWN;
+				keyDown = true;
+			}
 			break;
 		case 'd':
-			inp = RIGHT;
+			if (map[y][x + 1] != '1') {
+				inp = RIGHT;
+				keyDown = true;
+			}
+			break;
+		case 'i':
+			inp = INVENTORY;
 			keyDown = true;
 			break;
 		case 'x':
@@ -91,35 +128,75 @@ void Logic() {
 		x++;
 		inp = STOP;
 		break;
+	case INVENTORY:
+		inventory_on = true;
+		inp = STOP;
+		break;
 	default:
 		break;
 	}
 }
 
-void changeMap(int stage, int x, int y) {
+
+void createMap() {
+	ifstream readmap;
 	if (stage == 1) {
-		ifstream readmap("map1.txt");
-		string textline;
-		int i = 0;
-		while (getline(readmap, textline)) {
-			for (int j = 0; j < 102; j++) {
-				map[i][j] = textline[j];
-			}
-			i++;
+		readmap.open("map1.txt");
+	}
+	if (stage == 2) {
+		readmap.open("map2.txt");
+	}
+	if (inventory_on == true) {
+		itemUI();
+		inventory_on = false;
+	}
+	string textline;
+	int i = 0;
+	while (getline(readmap, textline)) {
+		for (int j = 0; j < 102; j++) {
+			map[i][j] = textline[j];
+		}
+		i++;
+	}
+	readmap.close();
+}
+
+void changeMap() {
+	if (stage == 1) {
+		if (map[y][x] == '2') {
+			stage = 2;
+			x = 2;
 		}
 	}
+	if (stage == 2) {
+		if (map[y][x] == '3') {
+			stage = 1;
+			x = 99;
+		}
+	}
+	createMap();
 }
 
 int main() {
-	//test git hub
+	srand(time(0));
 	setup();
-	changeMap(stage,x,y);
+	createMap();
 	draw();
 	while (1) {
 		input();
 		Logic();
 		if (keyDown) {
+			changeMap();
+			if (map[y][x] == '4' && rand() % 5 == 0) {
+				battleUI();
+			}
 			draw();
+			if (map[y][x] == 'T') {
+				cout << "#                                                                                                    #\n";
+				cout << "#   Congratulation. You got Ring of hero.                                                            #\n";
+				cout << "#                                                                                                    #\n";
+				cout << "######################################################################################################\n";
+			}
 			if (closeGame) {
 				break;
 			}

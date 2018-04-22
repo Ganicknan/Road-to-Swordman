@@ -7,7 +7,7 @@
 using namespace std;
 
 bool KeyDown = false;
-bool command[4] = { true,false,false,false };
+bool command[4];
 bool is_battle = false;
 enum einput { SSTOP = 0, BACK, ACCEPT, UUP, DDOWN };
 einput Inp;
@@ -139,7 +139,7 @@ void Dawnbattle() {
 	if (stage_select == 1) {
 		cout << "#  " << choice(command[0]) << " Attack                                                                                         #\n";
 		cout << "#  " << choice(command[1]) << " Skill                                                                                          #\n";
-		cout << "#  " << choice(command[2]) << " ?????                                                                                          #\n";
+		cout << "#  " << choice(command[2]) << " Item                                                                                           #\n";
 		cout << "#  " << choice(command[3]) << " Escape                                                                                         #\n";
 	}
 
