@@ -1,2 +1,4 @@
 ﻿  main.cpp
-  Road to Master.vcxproj -> C:\Users\KotoriSN\Road-to-Swordman\x64\Debug\Road to Master.exe
+c:\users\meizotic\road-to-swordman\road to master\battle.h(98): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\meizotic\road-to-swordman\road to master\main.cpp(181): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Road to Master.vcxproj -> C:\Users\Meizotic\Road-to-Swordman\x64\Debug\Road to Master.exe
