@@ -13,15 +13,18 @@ class Unit {
 	int exp;
 	int Mexp; //max exp.
 			  //Equipment* weapon, offhand, armor, accessory;
+	//skill *s1, s2;
 public:
 	string name;
 	int hp, Maxhp;
 	int mp, Maxmp;
 	Unit(string, int, int, int, int, int, int, int, int); // name,str,agi,dex,int,luk,vit,exp,money
-	void statuscal();
 	string coutname();
 	void editstatus(string, int, int, int, int, int, int, int, int);
-	void attack();
+	int attack(Unit &);
+	int beAttacked(int, char);
+	void action(int &, char &);
+	void n_attack(char &type);
 };
 
 Unit::Unit(string rname = "", int rstr = 0, int ragi = 0, int rdex = 0, int rint = 0, int rluk = 0, int rvit = 0, int rexp = 0, int rmoney = 0) {
@@ -33,11 +36,6 @@ Unit::Unit(string rname = "", int rstr = 0, int ragi = 0, int rdex = 0, int rint
 	vit = rvit;
 	exp = rexp;
 	money = rmoney;
-	cout << "build monster name " << name << endl;
-	statuscal();
-}
-
-void Unit::statuscal() {
 	Maxhp = 10 + (vit * 5);
 	Maxmp = 5 + (Int * 2);
 	atk = 2 + (str * 2);
@@ -48,6 +46,7 @@ void Unit::statuscal() {
 	eva = agi * 1.5;
 	acc = dex;
 	hp = Maxhp;
+	cout << "build monster name " << name << endl;
 }
 
 string Unit::coutname() {
@@ -64,9 +63,47 @@ void Unit::editstatus(string rname, int rstr, int ragi, int rdex, int rint, int 
 	exp = rexp;
 	money = rmoney;
 	cout << "edit monster name " << name << endl;
-	statuscal();
+	Maxhp = vit * 5;
+	Maxmp = Int * 2;
+	atk = str * 2;
+	matk = Int * 2;
+	def = vit + str;
+	mdef = vit + Int;
+	cri = luk * 0.5;
+	eva = agi * 1.5;
+	acc = dex;
+	hp = Maxhp;
 }
 
-void Unit::attack() {
+int Unit::attack(Unit &u) {
+	int power;
+	char attack_type;
+	action(power, attack_type);
+	u.beAttacked(power, attack_type);
+	return atk;
+}
 
+int Unit::beAttacked(int opppower, char attack_type) {
+	int dmg;
+	if (attack_type == 'P' && opppower > def) {
+		dmg = opppower - def;
+	}
+	else if (attack_type == 'M' && opppower > mdef) {
+		dmg = opppower - mdef;
+	}
+
+	hp -= dmg;
+	if (hp <= 0) { hp = 0; }
+
+	return dmg;
+}
+
+void Unit::action(int &dmg, char &type) {
+	int power = 100;
+	n_attack(type);
+	dmg = atk;
+}
+
+void Unit::n_attack(char &type) {
+	type = 'P';
 }
