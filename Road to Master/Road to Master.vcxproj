@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Monster.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Equipment.h" />
