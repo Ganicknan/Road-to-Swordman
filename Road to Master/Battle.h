@@ -4,6 +4,7 @@
 #include<cstdlib>
 #include<iomanip>
 #include<conio.h>
+#include"Monster.h"
 using namespace std;
 
 bool KeyDown = false;
@@ -14,7 +15,7 @@ einput Inp;
 int i = 0;
 int stage_select = 1;
 int ranmon = 0;
-Unit monster[5];
+Unit monster[7];
 Unit slime("slime",1,1,1,1,1,1,1,1);
 
 void Input() {
@@ -108,28 +109,13 @@ void monstersetup() {
 
 void Dawnbattle() {
 	system("cls");
-	string nam = monster[0].name;
+	string nam = monster[5].name;
 	cout << "######################################################################################################\n";
-	cout << "#  " << nam << "                                                                                      #\n";
-	cout << "#  HP " << monster[0].hp<<"                                                                                               #\n";
-	cout << "#  MP                                                                                                #\n";
+	cout << "#  " << setw(98) << left << nam << "#\n";
+	cout << "#  HP " << setw(95) << left << monster[5].hp <<"#\n";
+	cout << "#  MP " << setw(95) << left << monster[5].mp << "#\n";
 	cout << "######################################################################################################\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
-	cout << "#                                                                                                    #\n";
+//	drawMonster(nam);
 	cout << "######################################################################################################\n";
 	cout << "# \n";
 	cout << "# HP\n";
@@ -144,10 +130,7 @@ void Dawnbattle() {
 	}
 
 	if (stage_select == 2) { // select monster
-		cout << "#  " << choice(command[0]) << " Kong A                                                                                         #\n";
-		cout << "#  " << choice(command[1]) << " Kong B                                                                                         #\n";
-		cout << "#  " << choice(command[2]) << " Kong C                                                                                         #\n";
-		cout << "#\n";
+		cout << "#  " << choice(command[0]) << "  " << setw(94) << left << monster[5].name  << "#\n";
 	}
 	cout << "#                                                                                                    #\n";
 	cout << "######################################################################################################\n";

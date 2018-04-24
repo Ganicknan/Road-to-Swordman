@@ -31,7 +31,6 @@ void setup() {
 
 void draw() {
 	system("cls");
-	cout << monster[0].name;
 	for (int i = 0; i < 32; i++) {
 		for (int j = 0; j < 102; j++) {
 			if (x == j && y == i) {
