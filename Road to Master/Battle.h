@@ -12,17 +12,16 @@ bool command[4];
 bool is_battle = false;
 enum einput { SSTOP = 0, BACK, ACCEPT, UUP, DDOWN };
 einput Inp;
-int i = 0;
+int bi = 0;
 int stage_select = 1;
 int ranmon = 0;
 Unit monster[7];
-Unit slime("slime",1,1,1,1,1,1,1,1);
 
 void Input() {
 	if (_kbhit()) {
 		switch (_getch()) {
 		case 'w':
-			if (i != 0) {
+			if (bi != 0) {
 				Inp = UUP;
 				KeyDown = true;
 			}
@@ -33,7 +32,7 @@ void Input() {
 			KeyDown = true;
 			break;
 		case 's':
-			if (i != 3) {
+			if (bi != 3) {
 				Inp = DDOWN;
 				KeyDown = true;
 			}
@@ -49,9 +48,9 @@ void Input() {
 void logic() {
 	switch (Inp) {
 	case UUP:
-		command[i] = false;
-		i--;
-		command[i] = true;
+		command[bi] = false;
+		bi--;
+		command[bi] = true;
 		Inp = SSTOP;
 		break;
 	case BACK:
@@ -59,17 +58,17 @@ void logic() {
 		Inp = SSTOP;
 		break;
 	case DDOWN:
-		command[i] = false;
-		i++;
-		command[i] = true;
+		command[bi] = false;
+		bi++;
+		command[bi] = true;
 		Inp = SSTOP;
 		break;
 	case ACCEPT:
-		if (i == 0) {
+		if (bi == 0) {
 			//select monster to attack.
 			stage_select = 2;
 		}
-		if (i == 3) {
+		if (bi == 3) {
 			is_battle = false;
 		}
 		Inp = SSTOP;
@@ -141,7 +140,7 @@ void Dawnbattle(int rand_mon) {
 }
 void battleUI(int rand_mon) {
 	is_battle = true;
-	i = 0;
+	bi = 0;
 	command[0] = { true };
 	command[1] = { false };
 	command[2] = { false };

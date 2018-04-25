@@ -1,4 +1,4 @@
-#include"Equipment.h"
+#include"Shop.h"
 #include<vector>
 using namespace std;
 
@@ -18,6 +18,7 @@ public:
 	string name;
 	int hp, Maxhp;
 	int mp, Maxmp;
+	int item_type1, item_type2, item_type3, item_type4;
 	Unit(string, int, int, int, int, int, int, int, int); // name,str,agi,dex,int,luk,vit,exp,money
 	string coutname();
 	void editstatus(string, int, int, int, int, int, int, int, int);
@@ -46,7 +47,6 @@ Unit::Unit(string rname = "", int rstr = 0, int ragi = 0, int rdex = 0, int rint
 	eva = agi * 1.5;
 	acc = dex;
 	hp = Maxhp;
-	cout << "build monster name " << name << endl;
 }
 
 string Unit::coutname() {
@@ -62,7 +62,6 @@ void Unit::editstatus(string rname, int rstr, int ragi, int rdex, int rint, int 
 	vit = rvit;
 	exp = rexp;
 	money = rmoney;
-	cout << "edit monster name " << name << endl;
 	Maxhp = vit * 5;
 	Maxmp = Int * 2;
 	atk = str * 2;
