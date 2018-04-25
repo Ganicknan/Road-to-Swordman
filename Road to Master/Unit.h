@@ -13,7 +13,7 @@ class Unit {
 	int exp;
 	int Mexp; //max exp.
 			  //Equipment* weapon, offhand, armor, accessory;
-			  //skill *s1, s2;
+	//skill *s1, s2;
 public:
 	string name;
 	int hp, Maxhp;
@@ -47,6 +47,10 @@ Unit::Unit(string rname = "", int rstr = 0, int ragi = 0, int rdex = 0, int rint
 	acc = dex;
 	hp = Maxhp;
 	cout << "build monster name " << name << endl;
+}
+
+string Unit::coutname() {
+	return name;
 }
 
 void Unit::editstatus(string rname, int rstr, int ragi, int rdex, int rint, int rluk, int rvit, int rexp, int rmoney) {

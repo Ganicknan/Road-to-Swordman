@@ -107,15 +107,15 @@ void monstersetup() {
 	readmon.close();
 }
 
-void Dawnbattle() {
+void Dawnbattle(int rand_mon) {
 	system("cls");
-	string nam = monster[5].name;
+	string nam = monster[rand_mon].name;
 	cout << "######################################################################################################\n";
 	cout << "#  " << setw(98) << left << nam << "#\n";
-	cout << "#  HP " << setw(95) << left << monster[5].hp <<"#\n";
-	cout << "#  MP " << setw(95) << left << monster[5].mp << "#\n";
+	cout << "#  HP " << setw(95) << left << monster[rand_mon].hp <<"#\n";
+	cout << "#  MP " << setw(95) << left << monster[rand_mon].mp << "#\n";
 	cout << "######################################################################################################\n";
-//	drawMonster(nam);
+	drawmonster(nam);
 	cout << "######################################################################################################\n";
 	cout << "# \n";
 	cout << "# HP\n";
@@ -130,7 +130,7 @@ void Dawnbattle() {
 	}
 
 	if (stage_select == 2) { // select monster
-		cout << "#  " << choice(command[0]) << "  " << setw(94) << left << monster[5].name  << "#\n";
+		cout << "#  " << choice(command[0]) << "  " << setw(94) << left << monster[rand_mon].name  << "#\n";
 	}
 	cout << "#                                                                                                    #\n";
 	cout << "######################################################################################################\n";
@@ -139,20 +139,20 @@ void Dawnbattle() {
 	cout << "#                                                                                                    #\n";
 	cout << "######################################################################################################\n";
 }
-void battleUI() {
+void battleUI(int rand_mon) {
 	is_battle = true;
 	i = 0;
 	command[0] = { true };
 	command[1] = { false };
 	command[2] = { false };
 	command[3] = { false };
-	Dawnbattle();
+	Dawnbattle(rand_mon);
 	while (is_battle) {
 		Input();
 		logic();
 
 		if (KeyDown) {
-			Dawnbattle();
+			Dawnbattle(rand_mon);
 			KeyDown = false;
 		}
 	}

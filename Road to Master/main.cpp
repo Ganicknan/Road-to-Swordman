@@ -64,6 +64,36 @@ void draw() {
 				if (map[i][j] == 'T') {
 					cout << "T";
 				}
+				if (map[i][j] == 'Q') {
+					cout << "Q";
+				}
+				if (map[i][j] == 'U') {
+					cout << "U";
+				}
+				if (map[i][j] == 'E') {
+					cout << "E";
+				}
+				if (map[i][j] == 'S') {
+					cout << "S";
+				}
+				if (map[i][j] == 'O') {
+					cout << "O";
+				}
+				if (map[i][j] == 'H') {
+					cout << "H";
+				}
+				if (map[i][j] == 'o') {
+					cout << "O";
+				}
+				if (map[i][j] == 'P') {
+					cout << "P";
+				}
+				if (map[i][j] == 's') {
+					cout << "O";
+				}
+				if (map[i][j] == '5') {
+					cout << "*";
+				}
 			}
 		}
 		cout << "\n";
@@ -187,10 +217,21 @@ int main() {
 		if (keyDown) {
 			changeMap();
 			if (map[y][x] == '4' && rand() % 5 == 0) {
-				battleUI();
+				int rand_mon = rand() % 3;
+				battleUI(rand_mon);
+			}
+			if (map[y][x] == '5' && rand() % 5 == 0) {
+				int rand_mon = rand() % 3 + 3;
+				battleUI(rand_mon);
+			}
+			if (map[y][x] == 'O') {
+
+			}
+			if (map[y][x] == 's') {
+
 			}
 			draw();
-			if (map[y][x] == 'T') {
+			if (stage == 2 && map[y][x] == 'T') {
 				cout << "#                                                                                                    #\n";
 				cout << "#   Congratulation. You got Ring of hero.                                                            #\n";
 				cout << "#                                                                                                    #\n";
