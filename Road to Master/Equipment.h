@@ -2,14 +2,14 @@
 using namespace std;
 
 class Equipment {
+public:
 	int maxhp; // Max hp.
 	int maxmp;
 	int atk, matk; //m is magic.
 	int def, mdef; //m is magic.
 	float cri, eva, acc;
-	int type; //type ID 1.weapon 2.offhand 3.armor 4.accessory.
 	bool is_twohand; // offhade can't be used.
-public:
+	int type; //type ID 1.weapon 2.offhand 3.armor 4.accessory.
 	string name;
 	Equipment(string, int, int, int, int, int, int, float, float, float, int, bool); // name,maxhp,maxmp,atk,matk,def,mdef,cri,eva,acc,type,is_twohand
 };

@@ -22,7 +22,7 @@ Skill Fireball("Fireball", 2, 1.5, 'M');
 Skill Magicarrow("Magicarrow", 2, 1.5, 'M');
 Skill Stap("Stap", 2, 1.5, 'P');
 Unit monster[7];
-Unit hero("Hero", 6, 6, 6, 6, 6, 6);
+Unit hero("Hero", 6, 6, 6, 6, 6, 6, 0, 2000);
 Unit notahero("ImnotaHeros", 1, 1, 1, 1, 1, 1);
 Unit friendofhero("Mobu", 5, 5, 5, 5, 5, 5);
 Unit herowife("Herowaifu", 3, 6, 5, 8, 6, 4);
@@ -212,8 +212,8 @@ void battleUI(int rand_mon) {
 				logic();
 				if (KeyDown) {
 					KeyDown = false;
-					enemyattack = false;
 					if (attack) {
+						enemyattack = false;
 						switch (i)
 						{
 						case 0:
@@ -255,7 +255,7 @@ void battleUI(int rand_mon) {
 				break;
 			}
 		case 1:
-			if (!(hero.is_dead || herowife.is_dead) || ((hero.is_dead && i == 0) && !herowife.is_dead)) {
+			if (!(hero.is_dead || herowife.is_dead) || ((hero.is_dead && randommonstertarget == 0) && !herowife.is_dead)) {
 				pointtarget = &herowife;
 				who = 1;
 				break;

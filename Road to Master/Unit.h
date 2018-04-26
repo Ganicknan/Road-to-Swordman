@@ -13,22 +13,22 @@ public:
 };
 
 class Unit {
-	vector<Equipment> ownitem;
 	int atk, matk;
 	int def, mdef;
 	int str, agi, dex, Int, luk, vit; //main stats.
 	double cri, eva, acc; //sub stats.
-	int money;
 	int lvl; // level.
 	int exp;
 	int Mexp; //max exp.
 			  //Equipment* weapon, offhand, armor, accessory;
 	Skill *s1;
 public:
+	vector<Equipment> ownitem;
 	string name;
 	int hp, Maxhp;
 	int mp, Maxmp;
-	int item_type1, item_type2, item_type3, item_type4;
+	int money;
+	Equipment item_type1, item_type2, item_type3, item_type4;
 	bool is_dead = false;
 	Unit(string, int, int, int, int, int, int, int, int); // name,str,agi,dex,int,luk,vit,exp,money
 	void statuscal();
@@ -40,6 +40,7 @@ public:
 	void heal();
 	void operator=(Unit);
 	void inputskill(Skill *);
+	void increaseStats();
 };
 
 Unit::Unit(string rname = "", int rstr = 0, int ragi = 0, int rdex = 0, int rint = 0, int rluk = 0, int rvit = 0, int rexp = 0, int rmoney = 0) {
@@ -152,4 +153,37 @@ Skill::Skill(string rname, int mp, double rpower, char rtype) {
 
 void Skill::useskill(char &t, double &p) {
 	t = type, p = power;
+}
+
+void Unit::increaseStats() {
+	Maxhp += item_type1.maxhp;
+	Maxmp += item_type1.maxmp;
+	atk += item_type1.atk;
+	matk += item_type1.matk;
+	def += item_type1.def;
+	mdef += item_type1.mdef;
+	cri += item_type1.cri;
+	eva += item_type1.eva;
+	acc += item_type1.acc;
+
+	Maxhp += item_type2.maxhp;
+	Maxmp += item_type2.maxmp;
+	atk += item_type2.atk;
+	matk += item_type2.matk;
+	def += item_type2.def;
+	mdef += item_type2.mdef;
+	cri += item_type2.cri;
+	eva += item_type2.eva;
+	acc += item_type2.acc;
+
+	Maxhp += item_type3.maxhp;
+	Maxmp += item_type3.maxmp;
+	atk += item_type3.atk;
+	matk += item_type3.matk;
+	def += item_type3.def;
+	mdef += item_type3.mdef;
+	cri += item_type3.cri;
+	eva += item_type3.eva;
+	acc += item_type3.acc;
+
 }
