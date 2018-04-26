@@ -31,6 +31,8 @@ Unit wildmon;
 int damagereport;
 int who;
 bool enemyattack;
+int npotion = 3;
+bool useitem;
 
 void Input() {
 	if (_kbhit()) {
@@ -53,6 +55,7 @@ void Input() {
 			}
 			break;
 		case 'd':
+			if (bi == 2 && npotion == 0) break;
 			Inp = ACCEPT;
 			KeyDown = true;
 			break;
@@ -74,6 +77,7 @@ void logic() {
 		command[1] = { false };
 		command[2] = { false };
 		command[3] = { false };
+		bi = 0;
 		Inp = SSTOP;
 		break;
 	case DDOWN:
@@ -90,8 +94,12 @@ void logic() {
 				attack = true;
 				useskill = true;
 			}
-			if (stage_select == 3) {
+			else if (stage_select == 3) {
 				attack = true;
+			}
+			else if (stage_select == 4) {
+				who = 0;
+				useitem = true;
 			}
 			else {
 				stage_select = 3;
@@ -99,7 +107,21 @@ void logic() {
 			}
 		}
 		if (bi == 1) {
+			if (stage_select == 4) {
+				who = 1;
+				useitem = true;
+			}
 			stage_select = 2;
+			command[bi] = false;
+			bi = 0;
+			command[bi] = true;
+		}
+		if (bi == 2) {
+			if (stage_select == 4) {
+				who = 2;
+				useitem = true;
+			}
+			stage_select = 4;
 			command[bi] = false;
 			bi = 0;
 			command[bi] = true;
@@ -155,19 +177,25 @@ void Dawnbattle(int rand_mon) {
 	drawmonster(wildmon.name);
 	cout << "######################################################################################################\n";
 	cout << "# "<< setw(28) << left << hero.name << setw(28) << left << herowife.name << setw(43) << friendofhero.name << "#\n";
-	cout << "# HP " << setw(4) << right << hero.hp << "/" << setw(20) << left << hero.Maxhp << "HP " << setw(4) << right << herowife.hp << "/" << setw(20) << left << herowife.Maxhp << "HP " << setw(4) << right << friendofhero.hp << "/" << setw(36) << left << friendofhero.Maxhp << "#\n";
-	cout << "# MP " << setw(4) << right << hero.mp << "/" << setw(20) << left << hero.Maxmp << "HP " << setw(4) << right << herowife.mp << "/" << setw(20) << left << herowife.Maxmp << "HP " << setw(4) << right << friendofhero.mp << "/" << setw(36) << left << friendofhero.Maxmp << "#\n";;
+	cout << "# HP " << setw(4) << right << hero.hp << "/" << setw(20) << left << hero.Maxhp << "HP " << setw(4) << right << herowife.hp << "/" << setw(20) << left << herowife.Maxhp << "HP " << setw(4) << right << friendofhero.hp << "/" << setw(35) << left << friendofhero.Maxhp << "#\n";
+	cout << "# MP " << setw(4) << right << hero.mp << "/" << setw(20) << left << hero.Maxmp << "HP " << setw(4) << right << herowife.mp << "/" << setw(20) << left << herowife.Maxmp << "HP " << setw(4) << right << friendofhero.mp << "/" << setw(35) << left << friendofhero.Maxmp << "#\n";;
 	cout << "######################################################################################################\n";
 	cout << "#                                                                                                    #\n";
 	if (stage_select == 1) {
 		cout << "#  " << choice(command[0]) << " Attack                                                                                         #\n";
 		cout << "#  " << choice(command[1]) << " Skill                                                                                          #\n";
-		cout << "#  " << choice(command[2]) << " Item                                                                                           #\n";
+		cout << "#  " << choice(command[2]) << " Potion x" << setw(87) << left << npotion <<"#\n";
 		cout << "#  " << choice(command[3]) << " Escape                                                                                         #\n";
 	}
 
 	if (stage_select == 3 || stage_select == 2) { // select monster
 		cout << "#  " << choice(command[0]) << "  " << setw(94) << left << monster[rand_mon].name  << "#\n";
+	}
+
+	if (stage_select == 4) {
+		cout << "#  " << choice(command[0]) << " Hero                                                                                           #\n";
+		cout << "#  " << choice(command[1]) << " Herowife                                                                                       #\n";
+		cout << "#  " << choice(command[2]) << " Mobu                                                                                           #\n";
 	}
 	cout << "#                                                                                                    #\n";
 	cout << "######################################################################################################\n";
@@ -205,6 +233,7 @@ void battleUI(int rand_mon) {
 			command[3] = { false };
 			bool isincommand = true;
 			attack = false;
+			useitem = false;
 			stage_select = 1;
 			Dawnbattle(rand_mon);
 			while (isincommand) {
@@ -237,7 +266,17 @@ void battleUI(int rand_mon) {
 							break;
 						}
 						isincommand = false;
-						if (wildmon.hp == 0) return;
+						if (wildmon.hp == 0) {
+							hero.money += wildmon.money;
+							return;
+						}
+					}
+					else if (useitem) {
+						if (who == 0) hero.heal();
+						else if (who == 1) herowife.heal();
+						else friendofhero.heal();
+						npotion--;
+						isincommand = false;
 					}
 					else if (!is_battle) return;
 					else Dawnbattle(rand_mon);
