@@ -43,7 +43,7 @@ void setup() {
 	closeGame = false;
 	x = width / 2;
 	y = height / 2;
-	stage = 1;
+	stage = 3;
 }
 
 void draw() {
@@ -201,7 +201,7 @@ void createMap() {
 		readmap.open("map3.txt");
 	}
 	if (inventory_on == true) {
-		itemUI(hero.ownitem);
+		itemUI(hero.ownitem,hero,herowife,friendofhero);
 		inventory_on = false;
 	}
 	string textline;
@@ -256,19 +256,36 @@ int main() {
 			if (map[y][x] == '4' && rand() % 15 == 0) {
 				int rand_mon = rand() % 3;
 				battleUI(rand_mon);
+				if (hero.is_dead && herowife.is_dead && friendofhero.is_dead) {
+					cout << "Game Over.";
+					return 0;
+				}
 			}
 			if (map[y][x] == '5' && rand() % 15 == 0) {
 				int rand_mon = rand() % 2 + 3;
 				battleUI(rand_mon);
+				if (hero.is_dead && herowife.is_dead && friendofhero.is_dead) {
+					cout << "Game Over.";
+					return 0;
+				}
 			}
 			if (map[y][x] == 'B') {
 				battleUI(6);
+				if (hero.is_dead && herowife.is_dead && friendofhero.is_dead) {
+					cout << "Game Over.";
+					return 0;
+				}
+				else {
+					cout << "Congratulation. You got Nothing.";
+					return 0;
+				}
 			}
 			if (map[y][x] == 'a') {
 				battleUI(5);
-			}
-			if (map[y][x] == 'O') {
-
+				if (hero.is_dead && herowife.is_dead && friendofhero.is_dead) {
+					cout << "Game Over.";
+					return 0;
+				}
 			}
 			if (map[y][x] == 's') {
 				shopUI(equipment ,hero.money, hero.ownitem);

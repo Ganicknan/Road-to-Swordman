@@ -72,8 +72,50 @@ string ichoice(bool selected) {
 	}
 }
 
-void drawInventory(vector<Equipment> myitem) {
+void drawInventory(vector<Equipment> myitem, Unit& hero, Unit& f1, Unit& f2, ieInput test) {
 	int a = myitem.size();
+	if (test == iRIGHT) {
+		if (myitem[i].type == 1) {
+			hero.item_type1 = myitem[i];
+		}
+		if (myitem[i].type == 2 && hero.item_type1.is_twohand == 0 ) {
+			hero.item_type2 = myitem[i];
+		}
+		if (myitem[i].type == 3) {
+			hero.item_type3 = myitem[i];
+		}
+		if (myitem[i].type == 4) {
+			hero.item_type4 = myitem[i];
+		}
+	}
+	if (test == iRIGHT) {
+		if (myitem[i].type == 1) {
+			f1.item_type1 = myitem[i];
+		}
+		if (myitem[i].type == 2 && hero.item_type1.is_twohand == 0) {
+			f1.item_type2 = myitem[i];
+		}
+		if (myitem[i].type == 3) {
+			f1.item_type3 = myitem[i];
+		}
+		if (myitem[i].type == 4) {
+			f1.item_type4 = myitem[i];
+		}
+	}
+	if (test == iRIGHT) {
+		if (myitem[i].type == 1) {
+			f2.item_type1 = myitem[i];
+		}
+		if (myitem[i].type == 2 && hero.item_type1.is_twohand == 0) {
+			f2.item_type2 = myitem[i];
+		}
+		if (myitem[i].type == 3) {
+			f2.item_type3 = myitem[i];
+		}
+		if (myitem[i].type == 4) {
+			f2.item_type4 = myitem[i];
+		}
+	}
 	cout << "######################################################################################################\n";
 	cout << "#                                                                                                    #\n";
 	cout << "#                                                ITEM                                                #\n";
@@ -81,14 +123,34 @@ void drawInventory(vector<Equipment> myitem) {
 	cout << "######################################################################################################\n";
 	cout << "#                                                                                                    #\n";
 	for (int b = 0; b < a; b++) {
-		cout << "# "  << ichoice(icommand[b]) << setw(96) << left << myitem[b].name  << "#\n";
+		cout << "# " << ichoice(icommand[b]) << setw(88) << left << myitem[b].name;// << "#\n";
+		if (hero.item_type1.name == myitem[b].name) {
+			cout << left << " (used) " << "#\n";
+		}
+		else {
+			if (hero.item_type2.name == myitem[b].name) {
+				cout << left << " (used) " << "#\n";
+			}
+			else {
+				if (hero.item_type3.name == myitem[b].name) {
+					cout << left << " (used) " << "#\n";
+				}
+				else {
+					if (hero.item_type4.name == myitem[b].name) {
+						cout << left << " (used) " << "#\n";
+					}
+					else {
+						cout << "        #\n";
+					}
+				}
+			}
+		}
 	}
 	cout << "#                                                                                                    #\n";
 	cout << "######################################################################################################\n";
-
 }
 
-void itemUI(vector<Equipment> myitem) {
+void itemUI(vector<Equipment> myitem ,Unit& hero, Unit& friend1, Unit& friend2) {
 	i = 0;
 	icommand[0] = { 1 };
 	icommand[1] = { 0 };
@@ -105,15 +167,20 @@ void itemUI(vector<Equipment> myitem) {
 	icommand[12] = { 0 };
 	system("cls");
 	stage_inventory = true;
-	drawInventory(myitem);
+	ieInput test = iSTOP;
+	drawInventory(myitem,hero,friend1,friend2,test);
 	int how = myitem.size();
-	cout << how;
 	while (stage_inventory) {
 		iInput(how);
+		test = iinp;
 		iLogic();
 		if (KeyDown) {
 			system("cls");
-			drawInventory(myitem);
+			drawInventory(myitem,hero, friend1, friend2, test);
+			hero.increaseStats();
+			friend1.increaseStats();
+			friend2.increaseStats();
+
 		}
 		KeyDown = false;
 	}
