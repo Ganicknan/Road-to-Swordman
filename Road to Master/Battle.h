@@ -12,17 +12,16 @@ bool command[4];
 bool is_battle = false;
 enum einput { SSTOP = 0, BACK, ACCEPT, UUP, DDOWN };
 einput Inp;
-int i = 0;
+int bi = 0;
 int stage_select = 1;
 int ranmon = 0;
 Unit monster[7];
-Unit slime("slime",1,1,1,1,1,1,1,1);
 
 void Input() {
 	if (_kbhit()) {
 		switch (_getch()) {
 		case 'w':
-			if (i != 0) {
+			if (bi != 0) {
 				Inp = UUP;
 				KeyDown = true;
 			}
@@ -33,7 +32,7 @@ void Input() {
 			KeyDown = true;
 			break;
 		case 's':
-			if (i != 3) {
+			if (bi != 3) {
 				Inp = DDOWN;
 				KeyDown = true;
 			}
@@ -49,9 +48,9 @@ void Input() {
 void logic() {
 	switch (Inp) {
 	case UUP:
-		command[i] = false;
-		i--;
-		command[i] = true;
+		command[bi] = false;
+		bi--;
+		command[bi] = true;
 		Inp = SSTOP;
 		break;
 	case BACK:
@@ -59,17 +58,17 @@ void logic() {
 		Inp = SSTOP;
 		break;
 	case DDOWN:
-		command[i] = false;
-		i++;
-		command[i] = true;
+		command[bi] = false;
+		bi++;
+		command[bi] = true;
 		Inp = SSTOP;
 		break;
 	case ACCEPT:
-		if (i == 0) {
+		if (bi == 0) {
 			//select monster to attack.
 			stage_select = 2;
 		}
-		if (i == 3) {
+		if (bi == 3) {
 			is_battle = false;
 		}
 		Inp = SSTOP;
@@ -107,15 +106,15 @@ void monstersetup() {
 	readmon.close();
 }
 
-void Dawnbattle() {
+void Dawnbattle(int rand_mon) {
 	system("cls");
-	string nam = monster[5].name;
+	string nam = monster[rand_mon].name;
 	cout << "######################################################################################################\n";
 	cout << "#  " << setw(98) << left << nam << "#\n";
-	cout << "#  HP " << setw(95) << left << monster[5].hp <<"#\n";
-	cout << "#  MP " << setw(95) << left << monster[5].mp << "#\n";
+	cout << "#  HP " << setw(95) << left << monster[rand_mon].hp <<"#\n";
+	cout << "#  MP " << setw(95) << left << monster[rand_mon].mp << "#\n";
 	cout << "######################################################################################################\n";
-//	drawMonster(nam);
+	drawmonster(nam);
 	cout << "######################################################################################################\n";
 	cout << "# \n";
 	cout << "# HP\n";
@@ -130,7 +129,7 @@ void Dawnbattle() {
 	}
 
 	if (stage_select == 2) { // select monster
-		cout << "#  " << choice(command[0]) << "  " << setw(94) << left << monster[5].name  << "#\n";
+		cout << "#  " << choice(command[0]) << "  " << setw(94) << left << monster[rand_mon].name  << "#\n";
 	}
 	cout << "#                                                                                                    #\n";
 	cout << "######################################################################################################\n";
@@ -139,20 +138,20 @@ void Dawnbattle() {
 	cout << "#                                                                                                    #\n";
 	cout << "######################################################################################################\n";
 }
-void battleUI() {
+void battleUI(int rand_mon) {
 	is_battle = true;
-	i = 0;
+	bi = 0;
 	command[0] = { true };
 	command[1] = { false };
 	command[2] = { false };
 	command[3] = { false };
-	Dawnbattle();
+	Dawnbattle(rand_mon);
 	while (is_battle) {
 		Input();
 		logic();
 
 		if (KeyDown) {
-			Dawnbattle();
+			Dawnbattle(rand_mon);
 			KeyDown = false;
 		}
 	}

@@ -116,11 +116,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Monster.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Equipment.h" />
     <ClInclude Include="Battle.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Shop.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Unit.h" />
