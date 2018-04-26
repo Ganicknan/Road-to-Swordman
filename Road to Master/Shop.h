@@ -2,6 +2,7 @@
 #include<iomanip>
 #include<conio.h>
 #include"Equipment.h"
+#include<vector>
 using namespace std;
 
 
@@ -9,8 +10,7 @@ using namespace std;
 bool sKeyDown = false; 
 enum seinput { sSSTOP = 0, sBACK, sACCEPT, sUP, sDOWN };
 seinput sInp;
-bool scommand[14];
-bool scommamndbuy[2];
+bool scommand[13];
 int i = 0;
 int stage_shop = 1;
 bool is_shop;
@@ -79,11 +79,11 @@ string schoice(bool sselected) {
 	}
 }
 
-void listItem(Equipment* equipment) {
+void listItem(Equipment* equipment, int& smoney) {
 	int i = 0;
 	cout << "######################################################################################################\n";
 	cout << "#                                                                                                    #\n";
-	cout << "#                                                SHOP                                                #\n";
+	cout << "#                                                SHOP" << setw(44) << right << smoney << " G  #\n";
 	cout << "#                                                                                                    #\n";
 	cout << "######################################################################################################\n";
 	cout << "#                                                                                                    #\n";
@@ -95,7 +95,7 @@ void listItem(Equipment* equipment) {
 	cout << "######################################################################################################\n";
 }
 
-void shopUI(Equipment* equipment) {
+void shopUI(Equipment* equipment, int& smoney, vector<Equipment>& myitem) {
 	is_shop = true;
 	scommand[0] = { 1 };
 	scommand[1] = { 0 };
@@ -110,15 +110,26 @@ void shopUI(Equipment* equipment) {
 	scommand[10] = { 0 };
 	scommand[11] = { 0 };
 	scommand[12] = { 0 };
-	scommand[13] = { 0 };
 	system("cls");
-	listItem(equipment);
+	listItem(equipment, smoney);
+	seinput sin;
 	while (is_shop) {
 		sInput();
+		sin = sInp;
 		slogic();
 		if (sKeyDown) {
 			system("cls");
-			listItem(equipment);
+			if (sin == sACCEPT) {
+				if (smoney >= 500) {
+					smoney -= 500;
+					for (int a = 0; a < 14; a++) {
+						if (scommand[a] == 1) {
+							myitem.push_back(equipment[a]);
+						}
+					}
+				}
+			}
+			listItem(equipment, smoney);
 		}
 		sKeyDown = false;
 	}

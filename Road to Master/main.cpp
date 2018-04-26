@@ -72,12 +72,6 @@ void draw() {
 				if (map[i][j] == 'a') {
 					cout << "B";
 				}
-				if (map[i][j] == 'b') {
-					cout << "B";
-				}
-				if (map[i][j] == 'c') {
-					cout << "B";
-				}
 				if (map[i][j] == 'T') {
 					cout << "T";
 				}
@@ -110,6 +104,18 @@ void draw() {
 				}
 				if (map[i][j] == '5') {
 					cout << "*";
+				}
+				if (map[i][j] == 'L') {
+					cout << "L";
+				}
+				if (map[i][j] == 'A') {
+					cout << "A";
+				}
+				if (map[i][j] == ' ') {
+					cout << " ";
+				}
+				if (map[i][j] == 'B') {
+					cout << "B";
 				}
 			}
 		}
@@ -191,8 +197,11 @@ void createMap() {
 	if (stage == 2) {
 		readmap.open("map2.txt");
 	}
+	if (stage == 3) {
+		readmap.open("map3.txt");
+	}
 	if (inventory_on == true) {
-		itemUI();
+		itemUI(hero.ownitem);
 		inventory_on = false;
 	}
 	string textline;
@@ -219,6 +228,18 @@ void changeMap() {
 			x = 99;
 		}
 	}
+	if (stage == 2) {
+		if (map[y][x] == '2') {
+			stage = 3;
+			x = 2;
+		}
+	}
+	if (stage == 3) {
+		if (map[y][x] == '3') {
+			stage = 2;
+			x = 99;
+		}
+	}
 	createMap();
 }
 
@@ -237,19 +258,25 @@ int main() {
 				battleUI(rand_mon);
 			}
 			if (map[y][x] == '5' && rand() % 15 == 0) {
-				int rand_mon = rand() % 3 + 3;
+				int rand_mon = rand() % 2 + 3;
 				battleUI(rand_mon);
+			}
+			if (map[y][x] == 'B') {
+				battleUI(6);
+			}
+			if (map[y][x] == 'a') {
+				battleUI(5);
 			}
 			if (map[y][x] == 'O') {
 
 			}
 			if (map[y][x] == 's') {
-				shopUI(equipment);
+				shopUI(equipment ,hero.money, hero.ownitem);
 			}
 			draw();
 			if (stage == 2 && map[y][x] == 'T') {
 				cout << "#                                                                                                    #\n";
-				cout << "#   Congratulation. You got Ring of hero.                                                            #\n";
+				cout << "#   Congratulation. You got Nothing.                                                                 #\n";
 				cout << "#                                                                                                    #\n";
 				cout << "######################################################################################################\n";
 			}

@@ -3,21 +3,21 @@
 using namespace std;
 
 class Unit {
-	vector<Equipment> ownitem;
 	int atk, matk;
 	int def, mdef;
 	int str, agi, dex, Int, luk, vit; //main stats.
 	double cri, eva, acc; //sub stats.
-	int money;
 	int lvl; // level.
 	int exp;
 	int Mexp; //max exp.
 			  //Equipment* weapon, offhand, armor, accessory;
 	//skill *s1, s2;
 public:
+	vector<Equipment> ownitem;
 	string name;
 	int hp, Maxhp;
 	int mp, Maxmp;
+	int money;
 	int item_type1, item_type2, item_type3, item_type4;
 	Unit(string, int, int, int, int, int, int, int, int); // name,str,agi,dex,int,luk,vit,exp,money
 	string coutname();

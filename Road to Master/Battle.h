@@ -16,6 +16,7 @@ int bi = 0;
 int stage_select = 1;
 int ranmon = 0;
 Unit monster[7];
+Unit hero("hero", 1, 1, 1, 1, 1, 1, 1, 1000);
 
 void Input() {
 	if (_kbhit()) {
