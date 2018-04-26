@@ -118,7 +118,7 @@ int Unit::beAttacked(int opppower, char attack_type, int oppacc) {
 		dmg = opppower - mdef;
 	}
 	else dmg = 1;
-	if (rand() % 1000 < (eva - acc) * 10) dmg = 0;
+	if (rand() % 1000 < (eva - oppacc) * 10) dmg = 0;
 	hp -= dmg;
 	if (hp < 0) hp = 0, is_dead = true;
 	return dmg;

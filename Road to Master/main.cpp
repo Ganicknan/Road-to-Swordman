@@ -42,7 +42,7 @@ void setup() {
 	closeGame = false;
 	x = width / 2;
 	y = height / 2;
-	stage = 3;
+	stage = 1;
 
 }
 
