@@ -1,5 +1,4 @@
 #include<fstream>
-#include"Map.h"
 #include"Unit.h"
 #include<random>
 #include"Battle.h"
@@ -44,6 +43,7 @@ void setup() {
 	x = width / 2;
 	y = height / 2;
 	stage = 3;
+
 }
 
 void draw() {

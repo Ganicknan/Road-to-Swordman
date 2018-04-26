@@ -1,6 +1,8 @@
 #include<iostream>
 #include<iomanip>
 #include<conio.h>
+#include<cstdlib>
+#include<string>
 #include"Equipment.h"
 #include<vector>
 using namespace std;

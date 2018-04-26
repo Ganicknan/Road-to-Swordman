@@ -35,7 +35,7 @@ public:
 	void coutstatus();
 	void editstatus(string, int, int, int, int, int, int, int, int);
 	int attack(Unit &, int);
-	int beAttacked(int, char);
+	int beAttacked(int, char, int);
 	void n_attack(char &type);
 	void heal();
 	void operator=(Unit);
@@ -105,10 +105,11 @@ int Unit::attack(Unit &u, int command = 0) {
 
 	if (attack_type == 'P') power *= double(atk);
 	else power *= double(matk);
-	return u.beAttacked(int(power), attack_type);
+	if (rand() % 1000 < cri * 10) power *= 1.5;
+	return u.beAttacked(int(power), attack_type, acc);
 }
 
-int Unit::beAttacked(int opppower, char attack_type) {
+int Unit::beAttacked(int opppower, char attack_type, int oppacc) {
 	int dmg;
 	if (attack_type == 'P' && opppower > def) {
 		dmg = opppower - def;
@@ -117,6 +118,7 @@ int Unit::beAttacked(int opppower, char attack_type) {
 		dmg = opppower - mdef;
 	}
 	else dmg = 1;
+	if (rand() % 1000 < (eva - acc) * 10) dmg = 0;
 	hp -= dmg;
 	if (hp < 0) hp = 0, is_dead = true;
 	return dmg;
@@ -127,7 +129,7 @@ void Unit::n_attack(char &type) {
 }
 
 void Unit::heal() {
-	hp = Maxhp;
+	if (!is_dead) hp = Maxhp;
 }
 
 void Unit::operator=(Unit target) {
@@ -185,5 +187,20 @@ void Unit::increaseStats() {
 	cri += item_type3.cri;
 	eva += item_type3.eva;
 	acc += item_type3.acc;
+
+	if (item_type1.name == "Sword" && item_type2.name == "Iron Shield" && item_type3.name == "Heavy Armor" && item_type4.name == "Ring of STR") {
+		Maxhp += 100;
+	}
+	if (item_type1.name == "MagicRod" && item_type3.name == "Feather Armor" && item_type4.name == "Ring of INT") {
+		Maxhp += 100;
+	}
+	if (item_type1.name == "Dagger" && item_type3.name == "Cloth Armor" && item_type4.name == "Ring of LUK") {
+		Maxhp += 100;
+	}
+	if (item_type1.name == "Bow" && item_type3.name == "Leather Armor" && item_type4.name == "Ring of DEX") {
+		Maxhp += 100;
+	}
+
+	heal();
 
 }
